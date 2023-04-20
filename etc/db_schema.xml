@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="arslan_top_banner_templates" resource="default" engine="innodb"
+           comment="Top Banner Templates">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="text" name="name" nullable="false" comment="Banner Name"/>
+        <column xsi:type="text" name="background_color" nullable="true" comment=""/>
+        <column xsi:type="text" name="font_color" nullable="false" comment=""/>
+        <column xsi:type="text" name="image" nullable="true" comment=""/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+
+        <index referenceId="ARSLANFARRUKH_TOP_BANNER_TEMPLATES_ENTITY_ID" indexType="btree">
+            <column name="entity_id"/>
+        </index>
+    </table>
+    <table name="arslan_top_banner_bar" resource="default" engine="innodb" comment="ArslanFarrukh Top Banner">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Name"/>
+        <column xsi:type="date" name="from_date" comment="From"/>
+        <column xsi:type="date" name="to_date" comment="To"/>
+        <column xsi:type="text" name="display_text" nullable="false" comment="Text to display"/>
+        <column xsi:type="tinyint" name="is_clickable" padding="2" unsigned="false" nullable="false" identity="false" default="0" comment="Is Clickable"/>
+        <column xsi:type="text" name="link_text" nullable="true" comment="Link text"/>
+        <column xsi:type="text" name="banner_templates" nullable="false" comment="Banner Templates"/>
+        <column xsi:type="varchar" name="bar_link_url" nullable="true" length="255" comment="Bar Link URL"/>
+        <column xsi:type="tinyint" name="is_link_open_in_new_page" padding="2" unsigned="false" nullable="false" identity="false" default="0" comment="Is Link Open in New Page"/>
+        <column xsi:type="varchar" name="bar_layout_position" nullable="false" length="255" comment="Bar Layout Position"/>
+        <column xsi:type="tinyint" name="is_active" padding="2" unsigned="false" nullable="false" identity="false" default="1" comment="Is Active"/>
+        <column xsi:type="int" name="sort_order" padding="3" unsigned="true" nullable="false" identity="false" default="1" comment="Sort Order"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Update Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <index referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_IS_ACTIVE" indexType="btree">
+            <column name="is_active"/>
+        </index>
+        <index referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_SORT_ORDER" indexType="btree">
+            <column name="sort_order"/>
+        </index>
+        <index referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_FROM_DATE" indexType="btree">
+            <column name="from_date"/>
+        </index>
+        <index referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_TO_DATE" indexType="btree">
+            <column name="to_date"/>
+        </index>
+    </table>
+
+    <table name="arslan_top_banner_bar_store" resource="default" engine="innodb" comment="ArslanFarrukh Top Banner to Store View Relations">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Entity Id"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+            <column name="store_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_STORE_ENTITY_ID_ARSLANFARRUKH_TOP_BANNER_BAR_ENTITY_ID"
+                    table="arslan_top_banner_bar_store"
+                    column="entity_id"
+                    referenceTable="arslan_top_banner_bar"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign"
+                    referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_STORE_STORE_ID_STORE_STORE_ID"
+                    table="arslan_top_banner_bar_store"
+                    column="store_id"
+                    referenceTable="store"
+                    referenceColumn="store_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_STORE_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+
+    <table name="arslan_top_banner_bar_customer_group" resource="default" engine="innodb" comment="ArslanFarrukh Top Banner to Customer Groups Relations">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Entity Id"/>
+        <column xsi:type="int" name="customer_group_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer Group Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+            <column name="customer_group_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_CUSTOMER_GROUP_ENTITY_ID_ARSLANFARRUKH_TOP_BANNER_BAR_ENTITY_ID" table="arslan_top_banner_bar_customer_group" column="entity_id" referenceTable="arslan_top_banner_bar" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_CSTR_GROUP_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID" table="arslan_top_banner_bar_customer_group" column="customer_group_id" referenceTable="customer_group" referenceColumn="customer_group_id" onDelete="CASCADE"/>
+        <index referenceId="ARSLANFARRUKH_TOP_BANNER_BAR_CUSTOMER_GROUP_CUSTOMER_GROUP_ID" indexType="btree">
+            <column name="customer_group_id"/>
+        </index>
+    </table>
+</schema>

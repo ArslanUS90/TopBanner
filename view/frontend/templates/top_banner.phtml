@@ -1,0 +1,101 @@
+<?php
+
+use ArslanFarrukh\TopBanner\Api\Data\TemplatesConfigurationInterface;
+use ArslanFarrukh\TopBanner\Block\Entity\TopBannerImage;
+
+/** @var $block TopBannerImage */
+?>
+<?php
+$isModuleEnable = $block->getConfig('arslan_top_banner_bar/general/enable');
+$isTopBannerBarAvailable = null;
+if ($isModuleEnable):
+    $layoutPosition = $block->getData('position') ?: null;
+    $entityId = $block->getData('entity_id') ?: null;
+    if ($layoutPosition):
+        $barData = $block->getTopBannerBar();
+        if ($barData) {
+            $templateData = $block->getTemplateData((int)$barData['banner_templates']);//Note remove +1 when uploading to git
+            if (isset($templateData['image'])) {
+                $url = $block->getImage($templateData['image']);
+            }
+        }
+
+    endif;
+endif;
+?>
+<?php if ($barData && $barData['bar_layout_position'] === $layoutPosition): ?>
+    <div id="image-banner" class="top-banner-image-bar-display-text-message"
+         style="
+             font-size: '12px'?>;
+         <?php if (isset($url) == true): ?>
+             background-image: url('<?= $url ?>'); background-size: contain;
+         <?php elseif ($templateData[TemplatesConfigurationInterface::BACKGROUND_COLOR]): ?>
+             background-color: <?= /* @noEscape */ $templateData[TemplatesConfigurationInterface::BACKGROUND_COLOR]?>;
+                            <?php endif; ?>
+             ">
+        <?php if ($templateData['image'] == null): ?>
+            <div class="relative" style="background-color: <?= /* @noEscape */
+            $templateData[TemplatesConfigurationInterface::BACKGROUND_COLOR] ?>">
+                <p style="color: <?= /* @noEscape */
+                $templateData[TemplatesConfigurationInterface::FONT_COLOR] ?>"
+                   class="text-center text-lg font-bold px-9 py-4 sm:py-2.5">
+                    <?= $barData['display_text'] ?>
+                    <u>
+                        <?php if ($barData['is_clickable']): ?>
+                            <a <?= /* @noEscape */
+                            $barData['is_clickable'] ? 'href=' . $barData['bar_link_url'] : null ?>
+                                <?= /* @noEscape */
+                                $barData['is_clickable'] ? ($barData['is_link_open_in_new_page'] ? 'target=_blank' : 'target=_self') : null ?>
+                                style="color: <?= /* @noEscape */
+                                $templateData[TemplatesConfigurationInterface::FONT_COLOR] ?>">
+                                <?= $barData['link_text'] ?>
+                            </a>
+                        <?php endif ?>
+                        <span id="cros-mark" class="arrow-close"> x </span>
+                    </u>
+                </p>
+            </div>
+        <?php else: ?>
+            <p class="para" style="color: <?= /* @noEscape */
+            $templateData[TemplatesConfigurationInterface::FONT_COLOR] ?>">
+                <?= $barData['display_text'] . " " ?>
+                <u>
+                    <?php if ($barData['is_clickable']): ?>
+                        <a <?= /* @noEscape */
+                        $barData['is_clickable'] ? 'href=' . $barData['bar_link_url'] : null ?>
+                            <?= /* @noEscape */
+                            $barData['is_clickable'] ? ($barData['is_link_open_in_new_page'] ? 'target=_blank' : 'target=_self') : null ?>
+                            style="color: <?= /* @noEscape */
+                            $templateData[TemplatesConfigurationInterface::FONT_COLOR] ?>">
+                            <?= $barData['link_text'] ?>
+                        </a>
+                    <?php endif ?>
+                    <span id="cros-mark" class="arrow-close"> x </span>
+                </u>
+            </p>
+        <?php endif ?>
+    </div>
+<?php endif ?>
+
+<style>
+    .arrow-close {
+        float: right;
+        margin: 0 15px !important;
+        text-decoration: unset;
+        font-size: 20px;
+        cursor: pointer;
+    }
+</style>
+<script type="text/javascript">
+    require(["jquery"], function ($) {
+        $(document).ready(function () {
+            if (localStorage.getItem('arslan_topbanner_show') === 'false') {
+                $("#image-banner").hide();
+            }
+        });
+        $('#cros-mark').click(function () {
+            $("#image-banner").hide();
+            localStorage.setItem('arslan_topbanner_show', false);
+        });
+    });
+</script>

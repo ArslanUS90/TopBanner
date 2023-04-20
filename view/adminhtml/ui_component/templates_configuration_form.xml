@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                templates_configuration_form.templates_configuration_form_data_source
+            </item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Top Banner Template Configurations</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back">
+                <url path="*/*/"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="save">
+                <url path="*/*/save"/>
+                <class>primary</class>
+                <label translate="true">Save</label>
+            </button>
+        </buttons>
+        <namespace>templates_configuration_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>templates_configuration_form.templates_configuration_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="templates_configuration_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="*/*/save"/>
+        </settings>
+        <dataProvider class="ArslanFarrukh\TopBanner\Ui\DataProvider"
+                      name="templates_configuration_form_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="page_details">
+        <settings>
+            <label translate="true">General</label>
+            <collapsible>false</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="name" sortOrder="20" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Template Name</label>
+                <dataScope>name</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="attachment_type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Select Option</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="source" xsi:type="string">attachment_type</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/select</item>
+                    <item name="dataScope" xsi:type="string">attachment_type</item>
+                    <item name="options" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="label" xsi:type="string">Add Color</item>
+                            <item name="value" xsi:type="string">0</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="label" xsi:type="string">Upload Image</item>
+                            <item name="value" xsi:type="string">1</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <switcherConfig>
+                    <rules>
+                        <rule name="0">
+                            <value>0</value>
+                            <actions>
+                                <action name="0">
+                                    <target>templates_configuration_form.templates_configuration_form.page_details.background_color</target>
+                                    <callback>show</callback>
+                                </action>
+                                <action name="1">
+                                    <target>templates_configuration_form.templates_configuration_form.page_details.Font_color</target>
+                                    <callback>show</callback>
+                                </action>
+                                <action name="2">
+                                    <target>templates_configuration_form.templates_configuration_form.page_details.image</target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="1">
+                            <value>1</value>
+                            <actions>
+                                <action name="0">
+                                    <target>templates_configuration_form.templates_configuration_form.page_details.background_color</target>
+                                    <callback>hide</callback>
+                                </action>
+                                <action name="1">
+                                    <target>templates_configuration_form.templates_configuration_form.page_details.Font_color</target>
+                                    <callback>hide</callback>
+                                </action>
+                                <action name="2">
+                                    <target>templates_configuration_form.templates_configuration_form.page_details.image</target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                    </rules>
+                    <enabled>true</enabled>
+                </switcherConfig>
+            </settings>
+        </field>
+        <colorPicker name="background_color"
+                     class="Magento\Ui\Component\Form\Element\ColorPicker"
+                     component="Magento_Ui/js/form/element/color-picker">
+            <settings>
+                <label translate="true">Background Color</label>
+                <elementTmpl>ui/form/element/color-picker</elementTmpl>
+                <colorFormat>hex</colorFormat>
+                <colorPickerMode>full</colorPickerMode>
+                <dataScope>background_color</dataScope>
+            </settings>
+        </colorPicker>
+        <colorPicker name="Font_color"
+                     class="Magento\Ui\Component\Form\Element\ColorPicker"
+                     component="Magento_Ui/js/form/element/color-picker">
+            <settings>
+                <required>true</required>
+                <label translate="true">Font Color</label>
+                <elementTmpl>ui/form/element/color-picker</elementTmpl>
+                <colorFormat>hex</colorFormat>
+                <colorPickerMode>full</colorPickerMode>
+                <dataScope>font_color</dataScope>
+            </settings>
+        </colorPicker>
+        <field name="image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="source" xsi:type="string">Label</item>
+                    <item name="label" xsi:type="string" translate="true">Top Banner Image</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">ArslanFarrukh_TopBanner/image-preview</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="*/*/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

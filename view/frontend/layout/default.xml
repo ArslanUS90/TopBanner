@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="page.wrapper">
+            <block class="ArslanFarrukh\TopBanner\Block\Entity\TopBannerImage"
+                   name="banner.image.bar.top"
+                   template="ArslanFarrukh_TopBanner::top_banner.phtml"
+                   before="-">
+                <arguments>
+                    <argument name="position" xsi:type="string">page_top</argument>
+                </arguments>
+            </block>
+            <block class="ArslanFarrukh\TopBanner\Block\Entity\TopBannerImage"
+                   name="banner.image.bar.bottom"
+                   template="ArslanFarrukh_TopBanner::top_banner.phtml"
+                   after="-">
+                <arguments>
+                    <argument name="position" xsi:type="string">page_bottom</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

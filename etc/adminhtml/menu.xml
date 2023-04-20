@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="ArslanFarrukh_TopBanner::menu"
+             title="Top Banner"
+             module="ArslanFarrukh_TopBanner"
+             sortOrder="10"
+             resource="ArslanFarrukh_TopBanner::configuration"
+             parent="ArslanFarrukh_Core::arslan"
+        />
+        <add id="ArslanFarrukh_TopBanner::configuration"
+             title="Template Configurations"
+             module="ArslanFarrukh_TopBanner"
+             sortOrder="20"
+             resource="ArslanFarrukh_TopBanner::configuration"
+             parent="ArslanFarrukh_TopBanner::menu"
+             action="topbanner_templates/configuration/index"
+        />
+        <add
+            id="ArslanFarrukh_TopBanner::topconfiguration"
+            title="Top Banner Configurations"
+            translate="title"
+            module="ArslanFarrukh_TopBanner"
+            sortOrder="80"
+            resource="ArslanFarrukh_TopBanner::top_banner_management"
+            action="topbanner_templates/entity/index"
+            parent="ArslanFarrukh_TopBanner::menu"
+        />
+    </menu>
+</config>

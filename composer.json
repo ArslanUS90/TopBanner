@@ -1,0 +1,29 @@
+{
+    "name": "arslanfarrukh/top-banner",
+    "description": "Adds a Banner on top of every page to show campaigns, alerts etc.",
+    "require": {
+        "php": ">=7.1.0",
+        "arslanfarrukh/core": "1.0.*"
+    },
+    "type": "magento2-module",
+    "version": "1.0.1",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "authors": [
+        {
+            "name": "Support",
+            "email": "arslanfarrukh.us1990@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "ArslanFarrukh\\TopBanner\\": ""
+        }
+    }
+}
